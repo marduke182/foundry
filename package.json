@@ -1,27 +1,18 @@
 {
-  "name": "reviewer",
+  "name": "foundry-modules",
   "version": "1.0.0",
   "description": "Reviewers monorepo",
   "main": "index.js",
   "author": "marduke182",
   "license": "MIT",
   "private": true,
-  "comment": {
-    "scripts": {
-      "build": "We need to compile cjs first, because TypeScript doesn't know how to resolve module main field: https://github.com/microsoft/TypeScript/issues/21423"
-    }
-  },
   "scripts": {
-    "clean": "yarn clean:cjs && yarn clean:esm",
-    "clean:cjs": "yarn build:cjs --clean",
-    "clean:esm": "yarn build:esm --clean",
-    "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "yarn tsc -b",
-    "build:esm": "yarn tsc -b tsconfig.esm.json",
+    "clean": "yarn gulp clean",
+    "build": "yarn gulp build",
     "lint": "jest --config jest.eslint.config.js",
     "test": "jest",
     "typecheck": "tsc -b tsconfig.typecheck.json ",
-    "release-canary": "yarn lerna publish --canary --preid beta --dist-tag beta --yes",
+    "release": "yarn lerna version -y -m \"chore(release): modules %s\"",
     "gulp": "gulp"
   },
   "husky": {
@@ -40,9 +31,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "hygen": {
-    "namespace": "@marduke182"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
@@ -68,6 +56,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "fs-extra": "^9.0.1",
+    "gulp": "^4.0.2",
     "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^4.2.3",
     "jest": "^26.1.0",
@@ -77,12 +66,10 @@
     "lerna": "^3.22.1",
     "lint-staged": "^10.1.1",
     "merge-stream": "^2.0.0",
-    "ts-jest": "^26.1.3"
-  },
-  "dependencies": {
-    "gulp": "^4.0.2",
     "prettier": "^2.0.2",
+    "ts-jest": "^26.1.3",
     "ts-node": "^9.0.0",
     "typescript": "^3.8.3"
-  }
+  },
+  "dependencies": {}
 }

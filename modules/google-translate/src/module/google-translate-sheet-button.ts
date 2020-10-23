@@ -124,33 +124,3 @@ export function initSheetButton() {
     }
   );
 }
-
-// async function addGoogleTranslateButton(app: Application, html: JQuery, _data: any) {
-//   let sheetButton = await renderTemplate(
-//     "./modules/google-translate/templates/sheet-button.html",
-//     {}
-//   );
-//
-//   const appHeader = html.find(".window-header");
-//
-//   console.log(sheetButton);
-//   let item = (app as any).object as Item;
-//   $(sheetButton).insertBefore(appHeader.find(".close"));
-//
-//   appHeader.find("#google-translate").on("click", async (e) => {
-//     e.preventDefault();
-//
-//     const translatedName = await translate(item.data.name);
-//     const translatedDescription = await translate(item.data.data.description.value);
-//     if (translatedName.length && translatedDescription) {
-//       await item.update(
-//         {
-//           name: translatedName[0].translatedText,
-//           "data.description.value": translatedDescription[0].translatedText,
-//         },
-//         undefined
-//       );
-//     }
-//     console.log("updated");
-//   });
-// }
