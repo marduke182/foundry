@@ -1,0 +1,17 @@
+{
+  "name": "google-translate",
+  "title": "Google Translate by Marduke182",
+  "description": "Module to automatic translate items, actors, and journals using google translate",
+  "version": "1.0.0",
+  "compatibleCoreVersion": "0.6.6",
+  "minimumCoreVersion": "0.6.6",
+  "scripts": [],
+  "esmodules": ["./google-translate.js"],
+  "styles": [],
+  "packs": [],
+  "socket": true,
+  "url": "url",
+  "author": "marduke182",
+  "manifest": "manifest",
+  "download": "download"
+}

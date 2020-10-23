@@ -1,5 +1,5 @@
-import { foo } from "./module";
+import { foo } from './module-base';
 
-it("should return the value", function () {
+it('should return the value', function () {
   expect(foo(1)).toBe(1);
 });

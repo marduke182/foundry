@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.shared",
-  "references": [],
-  "compilerOptions": {
-    "rootDir": "src/",
-    "outDir": "./dist/commonjs"
-  },
-  "include": ["./src/**/*"]
-}

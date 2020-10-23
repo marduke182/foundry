@@ -1,4 +1,4 @@
-
+[]
 const createJestConfig = require('../../createJestConfig');
 
 module.exports = {

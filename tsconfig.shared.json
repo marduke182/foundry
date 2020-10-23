@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
     "target": "es5",
     "lib": ["dom", "es2015", "es2017", "es2019"],
-    "strict": true,
+    "strict": false,
     "downlevelIteration": true,
     "isolatedModules": false,
     "esModuleInterop": true,
@@ -16,9 +16,6 @@
     "noUnusedParameters": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "baseUrl": "./",
-    "paths": {
-      "@marduke182/*": ["./packages/*/src"]
-    }
+    "baseUrl": "./"
   }
 }
