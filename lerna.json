@@ -1,6 +1,13 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "modules/*"
+  ],
   "version": "independent",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "version": {
+      "conventionalCommits": true
+    }
+  }
 }

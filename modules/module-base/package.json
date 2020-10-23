@@ -1,6 +1,10 @@
 {
   "name": "@marduke182/module-base",
   "version": "0.0.0",
-  "author": "Jesús Q",
-  "license": "MIT"
+  "author": "Marduke182",
+  "license": "MIT",
+  "homepage": "https://github.com/marduke182/foundry",
+  "publishConfig": {
+    "access": "public"
+  }
 }

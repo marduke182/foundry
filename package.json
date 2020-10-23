@@ -34,9 +34,7 @@
     "*.{ts,tsx}": "prettier --write"
   },
   "workspaces": [
-    "packages/*",
-    "storybooks/*",
-    ".yalc/*"
+    "modules/*"
   ],
   "config": {
     "commitizen": {
@@ -76,7 +74,7 @@
     "jest-junit": "^11.0.1",
     "jest-runner-eslint": "^0.10.0",
     "json-stringify-pretty-compact": "^2.0.0",
-    "lerna": "^3.20.2",
+    "lerna": "^3.22.1",
     "lint-staged": "^10.1.1",
     "merge-stream": "^2.0.0",
     "ts-jest": "^26.1.3"
