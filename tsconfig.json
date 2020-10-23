@@ -1,0 +1,12 @@
+{
+  "references": [
+    {
+      "path": "./packages/foundry-utils"
+    }
+  ],
+  "compilerOptions": {
+    "module": "commonjs"
+  },
+  "include": [],
+  "exclude": ["**/node_modules", "storybooks"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "module-name",
+  "title": "module-title",
+  "description": "module-description",
+  "version": "version",
+  "compatibleCoreVersion": "0.7.0",
+  "minimumCoreVersion": "0.5.3",
+  "scripts": [],
+  "esmodules": [],
+  "styles": [],
+  "packs": [],
+  "socket": true,
+  "url": "url",
+  "author": "author",
+  "manifest": "manifest",
+  "download": "download"
+}

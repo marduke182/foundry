@@ -1,0 +1,8 @@
+
+{
+  "extends": "./tsconfig.shared",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true
+  }
+}
