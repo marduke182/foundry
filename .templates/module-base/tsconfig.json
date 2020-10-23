@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.shared",
+  "extends": "../../tsconfig.shared.json",
   "references": [],
   "compilerOptions": {
     "module": "esnext",
