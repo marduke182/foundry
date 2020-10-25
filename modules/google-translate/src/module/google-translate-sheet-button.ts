@@ -1,5 +1,4 @@
 import { translate, Translation } from './translate';
-const DEBUG = true;
 type OnClick = (e: UIEvent) => void;
 
 interface Button {
@@ -39,24 +38,33 @@ function addTranslateButton(buttons: Button[], onClick: OnClick) {
 async function translateItem(item: Item) {
   const name = getProperty(item, 'data.name');
   const description = getProperty(item, 'data.data.description.value');
+  const translations = await Promise.all([translate(name), translate(description)]);
 
-  console.log(name.length + description.length);
-  if (!DEBUG) {
-    const translations = await Promise.all([translate(name), translate(description)]);
-
-    if (allTranslated(translations)) {
-      await item.update(
-        {
-          name: getTranslation(translations[0]),
-          'data.description.value': getTranslation(translations[1]),
-        },
-        undefined
-      );
-    }
+  if (allTranslated(translations)) {
+    await item.update(
+      {
+        name: getTranslation(translations[0]),
+        'data.description.value': getTranslation(translations[1]),
+      },
+      undefined
+    );
   }
 }
 
 async function translateActor(actor: Actor) {
+  const name = getProperty(actor, 'data.name');
+
+  const translations = await Promise.all([translate(name)]);
+
+  if (allTranslated(translations)) {
+    await actor.update(
+      {
+        name: getTranslation(translations[0]),
+      },
+      undefined
+    );
+  }
+
   for (const item of actor.items.values()) {
     await translateItem(item);
   }
@@ -66,22 +74,22 @@ async function translateJournalEntry(journal: JournalEntry) {
   const name = getProperty(journal, 'data.name');
   const content = getProperty(journal, 'data.content');
 
-  if (!DEBUG) {
-    const translations = await Promise.all([translate(name), translate(content)]);
+  const translations = await Promise.all([translate(name), translate(content)]);
 
-    if (allTranslated(translations)) {
-      await journal.update(
-        {
-          name: getTranslation(translations[0]),
-          content: getTranslation(translations[1]),
-        },
-        undefined
-      );
-    }
+  if (allTranslated(translations)) {
+    await journal.update(
+      {
+        name: getTranslation(translations[0]),
+        content: getTranslation(translations[1]),
+      },
+      undefined
+    );
   }
 }
 
 export function initSheetButton() {
+  if (!game.user.isGM) return;
+
   let itemSheets = {};
   let actorSheets = {};
   Object.values(CONFIG.Item.sheetClasses).forEach((itemType) =>

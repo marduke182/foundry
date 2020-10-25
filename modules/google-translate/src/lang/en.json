@@ -1,0 +1,8 @@
+{
+  "google-translate.api-key.Name": "Api Key",
+  "google-translate.api-key.Hint": "Api key to use google translate (obtained on google cloud console).",
+  "google-translate.source.Name": "Source",
+  "google-translate.source.Hint": "Language that the assets has right now.",
+  "google-translate.target.Name": "Target",
+  "google-translate.target.Hint": "Language that the assets will be translate"
+}
