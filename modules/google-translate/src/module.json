@@ -15,5 +15,5 @@
   "url": "https://github.com/marduke182/foundry",
   "author": "Marduke182",
   "manifest": "https://raw.githubusercontent.com/marduke182/foundry/@marduke182/google-translate@1.0.0/modules/google-translate/src/module.json",
-  "download": "https://github.com/marduke182/foundry/archive/@marduke182/google-translate@1.0.0.zip"
+  "download": "https://github.com/marduke182/foundry/releases/download/@marduke182/google-translate@1.0.0/google-translate.zip"
 }

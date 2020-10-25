@@ -13,6 +13,7 @@
     "test": "jest",
     "typecheck": "tsc -b tsconfig.typecheck.json ",
     "version": "yarn gulp updateManifest",
+    "postversion": "yarn gulp release",
     "release": "yarn lerna version -y -m \"chore(release): modules\" --create-release github",
     "gulp": "gulp"
   },

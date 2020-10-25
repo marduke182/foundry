@@ -78,7 +78,7 @@ function createZip(moduleName: string, at: string, fromPath: string) {
 /**
  * Package build
  */
-export async function packageBuild(cb) {
+export async function packageAndUpload(cb) {
   for (const modulePath of eachModule()) {
     const manifest = fs.readJSONSync(path.join(modulePath, 'dist', 'module.json'));
     const packageInfo = fs.readJSONSync(path.join(modulePath, 'package.json'));
