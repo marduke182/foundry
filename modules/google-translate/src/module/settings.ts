@@ -8,8 +8,8 @@ export const getTarget = () => game.settings.get('google-translate', TARGET);
 
 export const registerSettings = function () {
   game.settings.register('google-translate', 'key', {
-    name: game.i18n.localize('google-translate.key.Name'),
-    hint: game.i18n.localize('google-translate.key.Hint'),
+    name: game.i18n.localize('google-translate.api-key.Name'),
+    hint: game.i18n.localize('google-translate.api-key.Hint'),
     scope: 'world',
     default: '',
     config: true,

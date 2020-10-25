@@ -3,6 +3,11 @@ import { getKey, getSource, getTarget } from './settings';
 const ROOT_URL = 'https://translation.googleapis.com/language/translate/v2';
 
 export function translate(text: string): Promise<Translation[]> {
+  const key = getKey();
+  if (!key) {
+    //TODO: add error handling
+    return;
+  }
   const params = `q=${encodeURIComponent(
     text
   )}&source=${getSource()}&target=${getTarget()}&key=${getKey()}`;
