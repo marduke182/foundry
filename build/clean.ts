@@ -1,5 +1,5 @@
 import { TaskFunction } from 'gulp';
-import { forEachModule } from './utils';
+import { eachModule } from './utils';
 import path from 'path';
 import fs from 'fs-extra';
 
@@ -36,14 +36,9 @@ async function cleanModule(modulePath: string): Promise<any> {
 }
 
 export const clean: TaskFunction = async (cb) => {
-  const promises = [];
+  for (const modulePath of eachModule()) {
+    await cleanModule(modulePath);
+  }
 
-  forEachModule((modulePath) => {
-    const promise = cleanModule(modulePath);
-    promises.push(promise);
-  });
-
-  const errors = (await Promise.all(promises)).filter((error) => !!error);
-
-  cb(errors.length ? errors : undefined);
+  cb();
 };

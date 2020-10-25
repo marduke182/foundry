@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { forEachModule } from './utils';
+import { eachModule } from './utils';
 
 /**
  * Copy static files
@@ -16,8 +16,7 @@ export async function copyFiles(cb) {
     'manifest.json',
   ];
   const errors = [];
-
-  forEachModule(async (modulePath) => {
+  for (const modulePath of eachModule()) {
     try {
       for (const file of statics) {
         if (fs.existsSync(path.join(modulePath, 'src', file))) {
@@ -27,7 +26,7 @@ export async function copyFiles(cb) {
     } catch (err) {
       errors.push(err);
     }
-  });
+  }
 
   cb(errors.length ? errors : undefined);
 }

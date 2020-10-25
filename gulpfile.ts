@@ -4,7 +4,7 @@ import { updateManifest as updateManifestImpl } from './build/update-manifest';
 import { clean as cleanModule } from './build/clean';
 import { copyFiles } from './build/copy-files';
 import { copyToUserData } from './build/copy-to-user-data';
-import { packageAndUpload } from './build/packageAndUpload';
+import { packageAndUpload } from './build/package-and-upload';
 
 export function copy(cb) {
   return copyFiles(cb);

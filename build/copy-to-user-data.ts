@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
-import { forEachModule } from './utils';
+import { eachModule } from './utils';
 
 /**
  * Copy build to User Data folder
@@ -12,7 +12,7 @@ export async function copyToUserData(cb) {
     throw new Error('You need to specify FOUNDRY_VTT_DATA_FOLDER env variable.');
   }
   const errors = [];
-  forEachModule(async (modulePath) => {
+  for (const modulePath of eachModule()) {
     const name = path.basename(path.resolve(modulePath));
     let destDir: string;
 
@@ -44,7 +44,7 @@ export async function copyToUserData(cb) {
     } catch (e) {
       errors.push(e);
     }
-  });
+  }
 
   cb(errors.length ? errors : undefined);
 }

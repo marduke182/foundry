@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import stringify from 'json-stringify-pretty-compact';
-import { forEachModule } from './utils';
+import { eachModule } from './utils';
 import { TaskFunction } from 'gulp';
 import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
 
@@ -20,7 +20,7 @@ const git: SimpleGit = simpleGit(options);
 export const updateManifest: TaskFunction = (cb) => {
   let errors: any[] = [];
 
-  forEachModule((modulePath) => {
+  for (const modulePath of eachModule()) {
     const packageJson = fs.readJSONSync(path.join(modulePath, 'package.json'));
     const moduleJson = fs.readJSONSync(path.join(modulePath, 'src', 'module.json'));
     const repository = packageJson.homepage;
@@ -43,7 +43,7 @@ export const updateManifest: TaskFunction = (cb) => {
     } catch (err) {
       errors.push(err);
     }
-  });
+  }
 
   cb(errors.length ? errors : undefined);
 };
