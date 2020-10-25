@@ -12,7 +12,8 @@
     "lint": "jest --config jest.eslint.config.js",
     "test": "jest",
     "typecheck": "tsc -b tsconfig.typecheck.json ",
-    "release": "yarn lerna version -y -m \"chore(release): modules %s\"",
+    "version": "yarn build",
+    "release": "yarn lerna version -y -m \"chore(release): modules\" --create-release github",
     "gulp": "gulp"
   },
   "husky": {
