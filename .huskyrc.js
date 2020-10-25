@@ -5,7 +5,7 @@ module.exports = {
     "commit-msg": "yarn commitlint -E HUSKY_GIT_PARAMS",
     'pre-commit': tasks([
       'yarn lint-staged',
-      'yarn gulp updateManifest'
+      'yarn gulp updateManifest',
     ])
   }
 }

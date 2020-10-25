@@ -3,6 +3,16 @@ import path from 'path';
 import stringify from 'json-stringify-pretty-compact';
 import { forEachModule } from './utils';
 import { TaskFunction } from 'gulp';
+import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
+
+const options: SimpleGitOptions = {
+  baseDir: process.cwd(),
+  binary: 'git',
+  maxConcurrentProcesses: 6,
+};
+
+// when setting all options in a single object
+const git: SimpleGit = simpleGit(options);
 
 /**
  * Update version and URLs in the manifest JSON
@@ -27,6 +37,7 @@ export const updateManifest: TaskFunction = (cb) => {
       const prettyProjectJson = stringify(moduleJson, { maxLength: 35 });
 
       fs.writeFileSync(path.join(modulePath, 'src', 'module.json'), prettyProjectJson, 'utf8');
+      git.add(path.join(modulePath, 'src', 'module.json'));
     } catch (err) {
       errors.push(err);
     }
