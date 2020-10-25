@@ -7,11 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @marduke182/google-translate
 
-
-
-
-
-# 1.0.0 (2020-10-25)
+# [1.0.0](https://github.com/marduke182/foundry/compare/@marduke182/google-translate@1.0.0) (2020-10-25)
 
 
 ### Features

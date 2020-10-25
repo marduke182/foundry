@@ -23,14 +23,15 @@ export const updateManifest: TaskFunction = (cb) => {
   for (const modulePath of eachModule()) {
     const packageJson = fs.readJSONSync(path.join(modulePath, 'package.json'));
     const moduleJson = fs.readJSONSync(path.join(modulePath, 'src', 'module.json'));
+    const moduleName = path.basename(modulePath);
     const repository = packageJson.homepage;
     try {
       moduleJson.version = packageJson.version;
-      moduleJson.url = repository;
+      moduleJson.url = `${repository}/tree/master/modules/${moduleName}`;
       moduleJson.author = packageJson.author;
       moduleJson.manifest = `${repository.replace('github.com', 'raw.githubusercontent.com')}/${
         packageJson.name
-      }@${packageJson.version}/modules/${path.basename(modulePath)}/src/module.json`;
+      }@${packageJson.version}/modules/${moduleName}/src/module.json`;
 
       moduleJson.download = `${repository}/releases/download/${packageJson.name}@${
         packageJson.version
