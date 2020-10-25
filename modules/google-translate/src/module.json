@@ -2,7 +2,7 @@
   "name": "google-translate",
   "title": "Google Translate by Marduke182",
   "description": "Module to automatic translate items, actors, and journals using google translate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibleCoreVersion": "0.6.6",
   "minimumCoreVersion": "0.6.6",
   "scripts": [],
@@ -14,6 +14,6 @@
   "socket": true,
   "url": "https://github.com/marduke182/foundry/tree/master/modules/google-translate",
   "author": "Marduke182",
-  "manifest": "https://raw.githubusercontent.com/marduke182/foundry/@marduke182/google-translate@1.0.1/modules/google-translate/src/module.json",
-  "download": "https://github.com/marduke182/foundry/releases/download/@marduke182/google-translate@1.0.1/google-translate.zip"
+  "manifest": "https://raw.githubusercontent.com/marduke182/foundry/@marduke182/google-translate@1.0.2/modules/google-translate/src/module.json",
+  "download": "https://github.com/marduke182/foundry/releases/download/@marduke182/google-translate@1.0.2/google-translate.zip"
 }
