@@ -23,3 +23,11 @@ export function forEachModule(modulefn: (modulePath: string) => any) {
     modulefn(module);
   }
 }
+
+export function* eachModule() {
+  const modules = getModules();
+
+  for (const modulePath of modules) {
+    yield modulePath;
+  }
+}

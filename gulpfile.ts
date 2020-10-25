@@ -26,6 +26,6 @@ export const dev = series(clean, execBuild, updateManifest, copyFiles, copyToUse
 
 export const build = series(clean, execBuild, updateManifest, copyFiles);
 
-export function zip(cb) {
+export function uploadRelease(cb) {
   return packageBuild(cb);
 }

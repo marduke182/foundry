@@ -32,7 +32,9 @@ export const updateManifest: TaskFunction = (cb) => {
         packageJson.name
       }@${packageJson.version}/modules/${path.basename(modulePath)}/src/module.json`;
 
-      moduleJson.download = `${repository}/archive/${packageJson.name}@${packageJson.version}.zip`;
+      moduleJson.download = `${repository}/releases/download/${packageJson.name}@${
+        packageJson.version
+      }/${path.basename(modulePath)}.zip`;
 
       const prettyProjectJson = stringify(moduleJson, { maxLength: 35 });
 
