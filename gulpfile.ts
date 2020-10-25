@@ -4,6 +4,7 @@ import { updateManifest as updateManifestImpl } from './build/update-manifest';
 import { clean as cleanModule } from './build/clean';
 import { copyFiles } from './build/copy-files';
 import { copyToUserData } from './build/copy-to-user-data';
+import { packageBuild } from './build/packageBuild';
 
 export function copy(cb) {
   return copyFiles(cb);
@@ -21,4 +22,10 @@ export function execBuild(cb) {
   return buildTs(cb);
 }
 
-export const build = series(clean, execBuild, updateManifest, copyFiles, copyToUserData);
+export const dev = series(clean, execBuild, updateManifest, copyFiles, copyToUserData);
+
+export const build = series(clean, execBuild, updateManifest, copyFiles);
+
+export function zip(cb) {
+  return packageBuild(cb);
+}
