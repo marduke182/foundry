@@ -1,22 +1,14 @@
-import { moduleName, journalCompendium, itemCompendium } from '../../consts';
 import * as logger from '../../logger';
+import { createCompendiumKey, getCompendium } from '../../utils';
+import { CompendiumType } from '../../types';
 
-export default async function () {
-  let sanitize = (text) => {
-    if (text && typeof text === 'string') {
-      return text.replace(/\s/g, '-').toLowerCase();
-    }
-    return text;
-  };
-
+export async function createConpendium() {
   const createCompendiumIfNoExist = async (
-    settingName: string,
-    compendiumType: string,
+    compendiumType: CompendiumType,
     compendiumLabel: string
   ) => {
-    const compendiumName = game.settings.get(moduleName, settingName);
-    const compendium = game.packs.find((pack: Compendium) => pack.collection === compendiumName);
-    const sanitizedLabel = sanitize(compendiumLabel);
+    const compendiumName = createCompendiumKey(compendiumType);
+    const compendium = getCompendium(compendiumType);
     if (compendium) {
       logger.info(`Compendium '${compendiumName}' found, will not create compendium.`);
       return false;
@@ -26,21 +18,17 @@ export default async function () {
     // create a compendium for the user
     await Compendium.create({
       entity: compendiumType,
-      label: `My Translations cache ${compendiumLabel}`,
-      name: `${game.world.name}-gt-${sanitizedLabel}`,
+      label: `Translations for: ${compendiumLabel}`,
+      name: compendiumName,
       package: 'world',
     });
-    await game.settings.set(
-      moduleName,
-      settingName,
-      `world.${game.world.name}-gt-${sanitizedLabel}`
-    );
     return true;
   };
 
   const results = await Promise.allSettled([
-    createCompendiumIfNoExist(itemCompendium, 'Item', 'Items'),
-    createCompendiumIfNoExist(journalCompendium, 'Journal', 'Journal'),
+    createCompendiumIfNoExist('Item', 'Items'),
+    // No need to cache journals, it does not make sense.... as differen that items this can change very often.
+    // createCompendiumIfNoExist('JournalEntry', 'Journal'),
   ]);
 
   if (results.some((result: PromiseFulfilledResult<boolean>) => result.value)) location.reload();

@@ -6,7 +6,7 @@ const showMessage = (logLevel: string) => {
   const setting = game.settings.get(moduleName, 'log-level');
   const logLevels = ['debug', 'info', 'warn', 'err', 'off'];
 
-  const logLevelIndex = logLevels.indexOf(logLevel.toUpperCase());
+  const logLevelIndex = logLevels.indexOf(logLevel);
   if (setting == 'OFF' || logLevelIndex === -1 || logLevelIndex < logLevels.indexOf(setting)) {
     return false;
   }
@@ -27,9 +27,9 @@ function log(logLevel: LogLevel, msg: string, ...payload: any[]): void {
   }
 
   if (payload) {
-    consoleBinded[logLevel](msg, ...payload);
+    consoleBinded[logLevel](`Translate: ${msg}`, ...payload);
   } else {
-    consoleBinded[logLevel](msg);
+    consoleBinded[logLevel](`Translate: ${msg}`);
   }
 }
 

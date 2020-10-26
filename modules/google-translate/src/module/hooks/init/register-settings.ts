@@ -1,4 +1,4 @@
-import { moduleName, itemCompendium } from '../../consts';
+import { moduleName } from '../../consts';
 
 const KEY = 'key';
 const SOURCE = 'source';
@@ -60,12 +60,5 @@ export const registerSettings = (): void => {
       err: 'ERR',
       debug: 'DEBUG',
     },
-  });
-
-  game.settings.register(moduleName, itemCompendium, {
-    scope: 'world',
-    default: '',
-    config: false,
-    type: String,
   });
 };
