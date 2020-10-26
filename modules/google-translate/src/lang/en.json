@@ -1,8 +1,11 @@
 {
   "google-translate.api-key.Name": "Api Key",
   "google-translate.api-key.Hint": "Api key to use google translate (obtained on google cloud console).",
+  "google-translate.api-key.not-found": "An api key is required to translate content. Go to module setttings to",
   "google-translate.source.Name": "Source",
   "google-translate.source.Hint": "Language that the assets has right now.",
   "google-translate.target.Name": "Target",
-  "google-translate.target.Hint": "Language that the assets will be translate"
+  "google-translate.target.Hint": "Language that the assets will be translate",
+  "google-translate.log-level.Name": "Log Level",
+  "google-translate.log-level.Hint": "Usefull for debug if somethings goes wrong with the app"
 }
