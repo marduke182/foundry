@@ -6,7 +6,7 @@ if (isCI) {
 }
 
 module.exports = {
-  projects: ['<rootDir>/packages/*'],
+  projects: ['<rootDir>/modules/*'],
   reporters,
-  testPathIgnorePatterns: ['/node_modules/', '/packages/'],
+  testPathIgnorePatterns: ['/node_modules/'],
 };

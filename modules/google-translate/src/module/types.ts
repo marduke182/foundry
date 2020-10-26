@@ -11,3 +11,10 @@ export interface Button {
 export interface ApplicationWithObject<T extends any> extends Application {
   object: T;
 }
+
+export type CompendiumType = 'Item' | 'JournalEntry';
+
+export interface ItemGTData {
+  name: string;
+  description: string;
+}
