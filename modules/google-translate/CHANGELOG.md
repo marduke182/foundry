@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/marduke182/foundry/compare/@marduke182/google-translate@1.1.0...@marduke182/google-translate@1.2.0) (2020-10-27)
+
+
+### Features
+
+* **google-translate:** enabling cache and santize content for journals ([b2f9967](https://github.com/marduke182/foundry/commit/b2f9967081d5662836bdf3446ddbdfc1085c9014))
+* **google-translate:** few refactors, add logger and create compendiums for future cache ([441b903](https://github.com/marduke182/foundry/commit/441b90393c680254a955c09c00a27318199068d4))
+
+
+
+
+
 # [1.1.0](https://github.com/marduke182/foundry/compare/@marduke182/google-translate@1.0.2...@marduke182/google-translate@1.1.0) (2020-10-25)
 
 
