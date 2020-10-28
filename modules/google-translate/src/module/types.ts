@@ -13,6 +13,7 @@ export interface ApplicationWithObject<T extends any> extends Application {
 }
 
 export type CompendiumType = 'Item' | 'JournalEntry';
+export type CompendiumsCache = 'Item' | 'Spell' | 'Feat';
 
 export interface ItemGTData {
   name: string;

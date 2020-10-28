@@ -5,7 +5,7 @@ function addTranslateButton(buttons: Button[], onClick: OnClick) {
   if (!buttons.some((button) => button.id === 'translate')) {
     buttons.unshift({
       icon: 'fas fa-address-book',
-      label: 'Translate',
+      label: 'Change Language',
       // @ts-ignore
       id: 'translate',
       // @ts-ignore

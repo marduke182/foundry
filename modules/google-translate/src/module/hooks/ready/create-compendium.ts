@@ -1,14 +1,14 @@
 import * as logger from '../../logger';
 import { createCompendiumKey, getCompendium } from '../../utils';
-import { CompendiumType } from '../../types';
+import { CompendiumType, CompendiumsCache } from '../../types';
 
 export async function createConpendium() {
   const createCompendiumIfNoExist = async (
     compendiumType: CompendiumType,
-    compendiumLabel: string
+    compendiumLabel: CompendiumsCache
   ) => {
-    const compendiumName = createCompendiumKey(compendiumType);
-    const compendium = getCompendium(compendiumType);
+    const compendiumName = createCompendiumKey(compendiumLabel);
+    const compendium = getCompendium(compendiumLabel);
     if (compendium) {
       logger.info(`Compendium '${compendiumName}' found, will not create compendium.`);
       return false;
@@ -26,7 +26,9 @@ export async function createConpendium() {
   };
 
   const results = await Promise.allSettled([
-    createCompendiumIfNoExist('Item', 'Items'),
+    createCompendiumIfNoExist('Item', 'Item'),
+    createCompendiumIfNoExist('Item', 'Spell'),
+    createCompendiumIfNoExist('Item', 'Feat'),
     // No need to cache journals, it does not make sense.... as differen that items this can change very often.
     // createCompendiumIfNoExist('JournalEntry', 'Journal'),
   ]);

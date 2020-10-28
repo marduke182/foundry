@@ -1,4 +1,4 @@
-import { CompendiumType } from './types';
+import { CompendiumsCache } from './types';
 
 export const errorOnce = () => {
   let showed = false;
@@ -17,10 +17,10 @@ export const sanitize = (text: string) => {
   return text;
 };
 
-export const createCompendiumKey = (type: CompendiumType): string =>
+export const createCompendiumKey = (type: CompendiumsCache): string =>
   `${game.world.name}-gt-${sanitize(type)}`;
 
-export const getCompendium = (type: CompendiumType): Compendium =>
+export const getCompendium = (type: CompendiumsCache): Compendium =>
   game.packs.get(`world.${createCompendiumKey(type)}`);
 
 export function sanitizeContent(content: string): string {

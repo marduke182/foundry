@@ -1,16 +1,47 @@
 import { getCompendium } from './utils';
 import { moduleName } from './consts';
 import * as logger from './logger';
-import { ItemGTData } from './types';
 
-export async function storeItemInCache(item: Item, translated: ItemGTData) {
+export interface ItemTranslationData {
+  source: {
+    name: string;
+    description: string;
+  };
+  target: {
+    name: string;
+    description: string;
+  };
+}
+
+export function getData(item: Item): ItemTranslationData | undefined {
+  const data = item.getFlag(moduleName, 'data');
+  if (!data) {
+    return data;
+  }
+
+  return data as ItemTranslationData;
+}
+
+export function setData(item: Item, data: ItemTranslationData): void {
+  item.setFlag(moduleName, 'data', data);
+}
+
+export async function storeItemInCache(item: Item, data: ItemTranslationData) {
   logger.info(`storing ${item.name} in the cache.`);
-  const cacheCompendium = getCompendium('Item');
+  if (!hasProperty(item, 'data.type')) {
+    logger.err(`${moduleName} requires that items contais a 'data.type' property.`);
+    return;
+  }
 
-  const newItem = await cacheCompendium.importEntity(await item.clone());
+  const cache = await getFromCache(item);
+  if (cache) {
+    setData(cache, data);
+  }
 
-  newItem.setFlag(moduleName, 'name', translated.name);
-  newItem.setFlag(moduleName, 'description', translated.description);
+  const cacheCompendium = getCompendiumCache(getProperty(item, 'data.type'));
+  const newItem = await cacheCompendium.importEntity(item);
+
+  setData(newItem as Item, data);
 }
 
 /**
@@ -38,14 +69,33 @@ function findSpecificItem(item: Item, items: Item[]): Item | undefined {
   return result.length > 1 ? result[0] : undefined;
 }
 
+function getCompendiumCache(type: string) {
+  switch (type) {
+    case 'spell': {
+      return getCompendium('Spell');
+    }
+    case 'feat': {
+      return getCompendium('Feat');
+    }
+    default: {
+      return getCompendium('Item');
+    }
+  }
+}
+
 export async function getFromCache(entity: Item): Promise<Item | undefined> {
   logger.info(`retrieving ${entity.name} from cache.`);
-  const cache = getCompendium('Item');
+  if (!hasProperty(entity, 'data.type')) {
+    logger.err(`${moduleName} requires that items contais a 'data.type' property.`);
+    return;
+  }
+  const type = getProperty(entity, 'data.type');
+  const compendiumCache = getCompendiumCache(type);
 
   const items = await Promise.all(
-    (await cache.getIndex())
+    (await compendiumCache.getIndex())
       .filter((item) => item.name === entity.name)
-      .map<Promise<Item>>((item) => cache.getEntity(item._id) as Promise<Item>)
+      .map<Promise<Item>>((item) => compendiumCache.getEntity(item._id) as Promise<Item>)
   );
 
   logger.debug(`${items.length} items found in the cache.`);

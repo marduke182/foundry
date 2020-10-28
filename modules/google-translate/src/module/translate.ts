@@ -3,7 +3,7 @@ import { getKey, getSource, getTarget } from './hooks/init/register-settings';
 import { errorOnce, sanitizeContent } from './utils';
 import * as logger from './logger';
 import { ItemGTData } from './types';
-import { getFromCache, storeItemInCache } from './cache';
+import { getFromCache, storeItemInCache, getData, ItemTranslationData, setData } from './cache';
 
 export interface Translation {
   translatedText: string;
@@ -63,16 +63,29 @@ async function updateItem(item: Item, data: ItemGTData) {
 }
 
 // Helpers end
+async function useInternalDataIfAble(item: Item, withData: Item): Promise<boolean> {
+  // Check if it was translated already
+  const data = getData(withData);
+  if (data) {
+    logger.info(`Item: ${item.name} was translated previously, flipping the language instead.`);
+    const { source, target } = data;
+    if (getProperty(item, 'data.name') === source.name) {
+      await updateItem(item, target);
+    } else {
+      await updateItem(item, source);
+    }
+    return true;
+  }
+  return false;
+}
 
 /**
  * Function that will translate the items name and description
  * @param item Item to be translated
  */
 export async function translateItem(item: Item): Promise<void> {
-  // Check if it was translated already
-  const wasTranslated = await item.getFlag(moduleName, 'translated');
-  if (wasTranslated) {
-    logger.info(`Stopping translation, the ${item.name} was already translated.`);
+  const done = await useInternalDataIfAble(item, item);
+  if (done) {
     return;
   }
 
@@ -80,30 +93,32 @@ export async function translateItem(item: Item): Promise<void> {
   const cache = await getFromCache(item);
   if (cache) {
     logger.info(`${item.name} was found on the cache.`);
-    await updateItem(item, {
-      name: cache.getFlag(moduleName, 'name'),
-      description: cache.getFlag(moduleName, 'description'),
-    });
-    return;
+    const done = await useInternalDataIfAble(item, cache);
+    if (done) {
+      // Need to store the cache on this item to no do another call
+      setData(item, getData(cache));
+      return;
+    }
   }
 
   // Otherwise, translate using google.
   logger.info(`${item.name} was not in the cache.`);
-
   const name = getProperty(item, 'data.name');
   const description = getProperty(item, 'data.data.description.value');
   const translations = await Promise.all([translate(name), translate(description)]);
 
   if (allTranslated(translations)) {
-    const itemData: ItemGTData = {
-      name: getTranslation(translations[0]),
-      description: getTranslation(translations[1]),
-    };
-
     // Uptade cache and set flag of item translated
-    storeItemInCache(item, itemData);
-    await updateItem(item, itemData);
-    await item.setFlag(moduleName, 'translated', true);
+    const itemTranslationData: ItemTranslationData = {
+      source: { name, description },
+      target: {
+        name: getTranslation(translations[0]),
+        description: getTranslation(translations[1]),
+      },
+    };
+    storeItemInCache(item, itemTranslationData);
+    await updateItem(item, itemTranslationData.target);
+    setData(item, itemTranslationData);
   }
 }
 
