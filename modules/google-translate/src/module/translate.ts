@@ -3,7 +3,13 @@ import { getKey, getSource, getTarget } from './hooks/init/register-settings';
 import { errorOnce, sanitizeContent } from './utils';
 import * as logger from './logger';
 import { ItemGTData } from './types';
-import { getFromCache, storeItemInCache, getData, ItemTranslationData, setData } from './cache';
+import {
+  getFromCompendium as getFromCompendiums,
+  storeInCompendiumIfNoExist,
+  getData,
+  ItemTranslationData,
+  setData,
+} from './compendium';
 
 export interface Translation {
   translatedText: string;
@@ -63,9 +69,9 @@ async function updateItem(item: Item, data: ItemGTData) {
 }
 
 // Helpers end
-async function useInternalDataIfAble(item: Item, withData: Item): Promise<boolean> {
+async function translateIfDataAvailable(item: Item, maybeItemWithDate: Item): Promise<boolean> {
   // Check if it was translated already
-  const data = getData(withData);
+  const data = getData(maybeItemWithDate);
   if (data) {
     logger.info(`Item: ${item.name} was translated previously, flipping the language instead.`);
     const { source, target } = data;
@@ -84,25 +90,25 @@ async function useInternalDataIfAble(item: Item, withData: Item): Promise<boolea
  * @param item Item to be translated
  */
 export async function translateItem(item: Item): Promise<void> {
-  const done = await useInternalDataIfAble(item, item);
-  if (done) {
+  if (await translateIfDataAvailable(item, item)) {
     return;
   }
 
   // Attempt to get from cache
-  const cache = await getFromCache(item);
-  if (cache) {
-    logger.info(`${item.name} was found on the cache.`);
-    const done = await useInternalDataIfAble(item, cache);
-    if (done) {
+  const itemFromCompendium = await getFromCompendiums(item);
+  if (itemFromCompendium) {
+    logger.info(`Item: ${item.name} was found in a compendium.`);
+    if (await translateIfDataAvailable(item, itemFromCompendium)) {
       // Need to store the cache on this item to no do another call
-      setData(item, getData(cache));
+      logger.info(`Item: ${item.name} has been translated using the compendium item.`);
+      setData(item, getData(itemFromCompendium));
+      logger.debug(`Updating internal data on the item.`);
       return;
     }
   }
 
   // Otherwise, translate using google.
-  logger.info(`${item.name} was not in the cache.`);
+  logger.info(`Item: ${item.name} was not found in a compendium. Using google translate.`);
   const name = getProperty(item, 'data.name');
   const description = getProperty(item, 'data.data.description.value');
   const translations = await Promise.all([translate(name), translate(description)]);
@@ -116,9 +122,11 @@ export async function translateItem(item: Item): Promise<void> {
         description: getTranslation(translations[1]),
       },
     };
-    storeItemInCache(item, itemTranslationData);
+    storeInCompendiumIfNoExist(item, itemTranslationData);
     await updateItem(item, itemTranslationData.target);
+    logger.info(`Item: ${item.name} has been translated using google translate.`);
     setData(item, itemTranslationData);
+    logger.debug(`Updating internal data on the item.`);
   }
 }
 
